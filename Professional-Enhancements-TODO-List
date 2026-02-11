@@ -1,0 +1,40 @@
+Professional Enhancements to impliment, not done yet.
+
+TODO Features:
+
+Command-line Arguments
+
+bash./torblock.sh --help
+./torblock.sh --install
+./torblock.sh --uninstall
+./torblock.sh --update
+./torblock.sh --status
+
+Logging to syslog
+
+bashlogger -t torblock "Loaded $LOADED IPs successfully"
+
+Configuration File
+Create /etc/torblock/torblock.conf:
+
+bashTOR_LIST_URL="https://check.torproject.org/torbulkexitlist"
+UPDATE_INTERVAL="daily"
+LOG_LEVEL="info"
+
+Metrics/Statistics
+
+bash./torblock.sh --stats
+# Output:
+# Total IPs blocked: 1076
+# Last update: 2025-02-12 14:30:00
+# Dropped packets: 1,234
+
+IPv6 Support
+Add IPv6 Tor exit nodes blocking
+Web Dashboard (Advanced)
+Create a simple web UI showing:
+
+
+Number of blocked IPs
+Last update time
+Blocked connection attempts
