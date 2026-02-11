@@ -116,6 +116,9 @@ zero-dependency bash script. Uses nftables for efficient IP filtering.
 Perfect for web servers, APIs, and services requiring authenticated access.
 
 ⚡ Blocks 1000+ Tor nodes in seconds
+
 🔒 Production-tested and battle-hardened
+
 📊 Detailed logging and verification
+
 🚀 Easy automation with cron/systemd
