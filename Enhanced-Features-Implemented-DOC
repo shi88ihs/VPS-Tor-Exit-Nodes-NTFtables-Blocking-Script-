@@ -1,0 +1,151 @@
+Implemented Features:
+1. Command-line Arguments
+bashsudo torblock --install      # Install and setup
+sudo torblock --uninstall    # Remove everything
+sudo torblock --update       # Update block lists
+sudo torblock --status       # Show current status
+sudo torblock --stats        # Detailed statistics
+sudo torblock --help         # Show help
+sudo torblock --version      # Show version
+2. Logging to Syslog
+
+Automatic syslog integration
+Color-coded console output
+File logging to /var/log/torblock.log
+Controlled by ENABLE_SYSLOG config option
+
+3. Configuration File
+
+Located at /etc/torblock/torblock.conf
+Customizable settings:
+
+Tor list URLs
+Update intervals
+IPv6 enable/disable
+Logging options
+nftables table/chain names
+
+
+
+4. Statistics & Metrics
+bashsudo torblock --stats
+# Shows:
+# - Total IPs blocked (IPv4 + IPv6)
+# - Last update timestamp
+# - Log file size
+# - Recent activity
+5. IPv6 Support
+
+Downloads IPv6 Tor exit nodes from Onionoo API
+Creates separate IPv6 set in nftables
+Can be disabled via config
+
+6. State Management
+
+JSON state file at /var/lib/torblock/state.json
+Tracks:
+
+Version
+Last update time
+IPv4/IPv6 counts
+Total blocked
+
+
+
+7. Systemd Integration
+
+Auto-created service and timer
+Daily automatic updates
+Integrates with systemd journaling
+Commands:
+
+bash  systemctl status torblock.timer
+  systemctl status torblock.service
+  journalctl -u torblock.service
+```
+
+## 📁 File Structure:
+```
+/etc/torblock/
+└── torblock.conf           # Configuration
+
+/var/lib/torblock/
+├── tor-exit-nodes.txt      # IPv4 list
+├── tor-exit-nodes-ipv6.txt # IPv6 list
+└── state.json              # State tracking
+
+/var/log/
+└── torblock.log            # Log file
+
+/usr/local/bin/
+└── torblock                # Main script
+
+/etc/systemd/system/
+├── torblock.service        # Systemd service
+└── torblock.timer          # Systemd timer
+🚀 Usage Guide:
+Installation:
+bash# 1. Download the script
+curl -O https://raw.githubusercontent.com/shi88ihs/VPS-Tor-Exit-Nodes-NTFtables-Blocking-Script/main/torblock.sh
+chmod +x torblock.sh
+
+# 2. Install
+sudo ./torblock.sh --install
+
+# 3. Activate blocking
+sudo torblock --update
+
+# 4. Check status
+sudo torblock --status
+Daily Operations:
+bash# Check if blocking is active
+sudo torblock --status
+
+# Manual update
+sudo torblock --update
+
+# View stats
+sudo torblock --stats
+
+# Check systemd timer
+systemctl list-timers torblock.timer
+Uninstallation:
+bashsudo torblock --uninstall
+🔧 Configuration Example:
+Edit /etc/torblock/torblock.conf:
+bash# Enable/disable IPv6
+ENABLE_IPV6="true"
+
+# Enable syslog
+ENABLE_SYSLOG="true"
+
+# Custom Tor list URL
+TOR_LIST_URL="https://check.torproject.org/torbulkexitlist"
+
+# Log level
+LOG_LEVEL="info"
+```
+
+## 📊 Sample Output:
+```
+======================================
+       TorBlock Status Report
+======================================
+
+Status: ✅ ACTIVE
+
+Last Update:  2025-02-14 15:30:00
+IPv4 Blocked: 1076
+IPv6 Blocked: 234
+Total Blocked: 1310
+
+======================================
+       Firewall Rules
+======================================
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy accept;
+        ip saddr @torlist drop
+        ip6 saddr @torlist6 drop
+    }
+}
