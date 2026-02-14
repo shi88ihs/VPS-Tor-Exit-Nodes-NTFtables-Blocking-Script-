@@ -1,0 +1,100 @@
+## 🚀 Quick Start
+
+### Step 1: Download the Script
+```bash
+git clone https://github.com/shi88ihs/VPS-Tor-Exit-Nodes-NTFtables-Blocking-Script-.git
+cd VPS-Tor-Exit-Nodes-NTFtables-Blocking-Script-
+```
+
+### Step 2: Make it Executable
+```bash
+chmod +x torblock.sh
+```
+
+### Step 3: Run the Script (Choose One Method)
+
+**Method A: Direct Run (Quick Test)**
+```bash
+sudo bash torblock.sh
+```
+
+**Method B: Install System-Wide (Recommended for Production)**
+```bash
+# Install the script to system PATH
+sudo bash torblock.sh --install
+
+# Then use as a command
+sudo torblock --update
+sudo torblock --status
+```
+
+### Step 4: Download Tor Exit Node List
+```bash
+curl -o tor-exit-nodes.txt https://check.torproject.org/torbulkexitlist
+```
+
+### Step 5: Activate Blocking
+
+**If running directly:**
+```bash
+sudo bash torblock.sh
+```
+
+**If installed:**
+```bash
+sudo torblock --update
+```
+
+## 📖 Usage
+
+Once installed, you can use these commands:
+```bash
+# Update and activate blocking
+sudo torblock --update
+
+# Check blocking status
+sudo torblock --status
+
+# View detailed statistics
+sudo torblock --stats
+
+# Uninstall
+sudo torblock --uninstall
+```
+
+### Running Without Installation
+
+If you prefer not to install system-wide:
+```bash
+# Block Tor nodes
+sudo bash torblock.sh
+
+# With custom tor list
+sudo bash torblock.sh /path/to/tor-exit-nodes.txt
+```
+
+## 🔧 Commands Reference
+
+| Command | Description |
+|---------|-------------|
+| `--install` | Install TorBlock system-wide |
+| `--uninstall` | Remove TorBlock from system |
+| `--update` | Download latest Tor list and update rules |
+| `--status` | Show current blocking status |
+| `--stats` | Display detailed statistics |
+| `--help` | Show help message |
+| `--version` | Show version information |
+
+### Files Created After Installation
+
+- `/etc/torblock/torblock.conf` - Configuration file
+- `/var/lib/torblock/` - Data directory
+- `/var/log/torblock.log` - Log file
+- `/var/lib/torblock/state.json` - State tracking
+- `/usr/local/bin/torblock` - Executable command
+
+## ⚠️ Important Notes
+
+- **Always use `sudo`** - nftables requires root privileges
+- **First run**: Use `sudo bash torblock.sh` or install first
+- **After installation**: Use `sudo torblock [command]`
