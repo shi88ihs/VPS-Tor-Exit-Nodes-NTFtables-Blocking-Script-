@@ -103,7 +103,7 @@ sudo bash torblock.sh /path/to/tor-exit-nodes.txt
 
 Set up automatic updates:
 
-bash   sudo crontab -e
+sudo crontab -e
    # Add: 0 3 * * * /usr/local/bin/torblock --update >> /var/log/torblock-cron.log 2>&1
 
 Monitor blocked attempts:
@@ -113,6 +113,6 @@ Try connecting via Tor Browser to verify blocking works
 Make persistent:
 Ensure nftables rules persist across reboots
 
-bash  sudo systemctl enable nftables
+sudo systemctl enable nftables
 
 Congratulations! Your Tor blocking system is fully operational and protecting your server! 🛡️
